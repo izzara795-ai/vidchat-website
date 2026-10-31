@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1c">
+  <meta name="description" content="Meet new people around the world with VidChat. Enjoy random 1-to-1 video conversations, instant matching and text chat.">
+  <title>VidChat - Meet Someone New</title>
+
+  <style>
+    :root {
+      --bg: #090d1c;
+      --panel: #11182b;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --text: #f8fafc;
+      --muted: #aab3c5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -1px;
+    }
+
+    .logo span { color: #c084fc; }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 14px;
+      margin-left: 24px;
+    }
+
+    .nav-link:hover { color: white; }
+
+    .hero {
+      padding: 90px 0 85px;
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(139,92,246,.20), transparent 45%),
+        radial-gradient(ellipse at 85% 30%, rgba(236,72,153,.13), transparent 40%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #d8b4fe;
+      background: rgba(139,92,246,.15);
+      border: 1px solid rgba(192,132,252,.25);
+      border-radius: 30px;
+      padding: 7px 14px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 67px);
+      line-height: 1.08;
+      letter-spacing: -2.5px;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 23px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .primary {
+      background: linear-gradient(100deg, #8b5cf6, #d946ef);
+      color: white;
+      box-shadow: 0 10px 30px rgba(139,92,246,.25);
+    }
+
+    .secondary {
+      color: white;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.04);
+    }
+
+    .small-note {
+      color: #8993a8;
+      font-size: 12px;
+      margin-top: 17px;
+    }
+
+    .visual {
+      min-height: 410px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 25px;
+      padding: 25px;
+      background: linear-gradient(145deg, #1b2140, #11182b);
+      box-shadow: 0 25px 80px rgba(0,0,0,.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual:before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      background: #8b5cf6;
+      filter: blur(100px);
+      opacity: .2;
+      top: -50px;
+      right: -50px;
+    }
+
+    .video-window {
+      position: relative;
+      z-index: 1;
+      min-height: 245px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #36265d, #202d53 55%, #702e6a);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .video-icon {
+      font-size: 55px;
+      margin-bottom: 12px;
+    }
+
+    .video-window strong { font-size: 20px; }
+    .video-window p { color: #d4c9ec; font-size: 13px; }
+
+    .status {
+      margin-top: 17px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #dce3f2;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #4ade80;
+    }
+
+    section { padding: 75px 0; }
+
+    .section-heading {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 42px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(29px, 4vw, 40px);
+      margin-bottom: 12px;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 27px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 { font-size: 18px; margin-bottom: 9px; }
+    .feature p { color: var(--muted); font-size: 14px; }
+
+    .safety {
+      background: #101629;
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .safety-content {
+      max-width: 760px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .safety-content h2 {
+      font-size: clamp(29px, 4vw, 39px);
+      margin-bottom: 15px;
+    }
+
+    .safety-content p { color: var(--muted); }
+
+    .download {
+      text-align: center;
+      background:
+        radial-gradient(ellipse at center, rgba(139,92,246,.20), transparent 65%);
+    }
+
+    .download h2 {
+      font-size: clamp(30px, 4vw, 43px);
+      margin-bottom: 13px;
+    }
+
+    .download p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #8f9aaf;
+      font-size: 13px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    footer a { color: #c4b5fd; }
+
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .visual { min-height: 330px; }
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 65px 0; }
+    }
+
+    @media (max-width: 540px) {
+      .features { grid-template-columns: 1fr; }
+      .nav-link { margin-left: 10px; font-size: 12px; }
+      .logo { font-size: 23px; }
+      .btn { width: 100%; }
+      .footer-content { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">Vid<span>Chat</span></a>
+        <div>
+          <a class="nav-link" href="#features">Features</a>
+          <a class="nav-link" href="#safety">Safety</a>
+          <a class="nav-link" href="#download">Download</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="eyebrow">YOUR NEXT CONVERSATION STARTS HERE</div>
+
+          <h1>Meet someone new.<br><span>Make a connection.</span></h1>
+
+          <p class="hero-copy">
+            Discover new people and enjoy spontaneous one-to-one video
+            conversations with VidChat. Connect, chat and make every
+            conversation an opportunity to meet someone interesting.
+          </p>
+
+          <div class="actions">
+            <a class="btn primary"
+               href="https://u.pcloud.link/publink/show?code=XZxBmSJZ9nykQLdXsYBdfaoUBwy82kbbb8eV&utm_source=chatgpt.com"
+               target="_blank" rel="noopener">
+              DOWNLOAD VIDCHAT NOW
+            </a>
+
+            <a class="btn secondary"
+               href="https://wa.me/qr/ODOM6NGHSINVG1"
+               target="_blank" rel="noopener">
+              CONTACT US ON WHATSAPP
+            </a>
+          </div>
+
+          <p class="small-note">
+            Android app download · Follow the installation instructions on your device.
+          </p>
+        </div>
+
+        <div class="visual">
+          <div class="video-window">
+            <div class="video-icon">🎥</div>
+            <strong>Someone new is waiting.</strong>
+            <p>Discover your next conversation with VidChat.</p>
+          </div>
+          <div class="status">
+            <span class="dot"></span>
+            Ready for your next connection
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Everything you need to connect</h2>
+          <p>
+            A simple way to discover conversations and meet people
+            beyond your usual circle.
+          </p>
+        </div>
+
+        <div class="features">
+
+          <article class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Instant Matching</h3>
+            <p>Discover new people and start spontaneous one-to-one conversations.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">📹</div>
+            <h3>HD Video & Clear Audio</h3>
+            <p>Enjoy video conversations with quality that adapts to your connection.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">💬</div>
+            <h3>Built-in Text Chat</h3>
+            <p>Communicate through text while connecting with someone new.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">🛡️</div>
+            <h3>AI Safety Shield</h3>
+            <p>Designed with safety-focused features to support a better chat experience.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacy Matters</h3>
+            <p>We believe your privacy matters. Review the app's privacy information before sharing personal details.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">🌍</div>
+            <h3>Free Matching</h3>
+            <p>Discover new connections and explore conversations without a matching fee.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="safety" id="safety">
+      <div class="container safety-content">
+        <h2>Connect with confidence</h2>
+        <p>
+          Be respectful, protect your personal information and only share
+          what you feel comfortable sharing. If a conversation makes you
+          uncomfortable, leave it and use the safety options available
+          in the app.
+        </p>
+      </div>
+    </section>
+
+    <section class="download" id="download">
+      <div class="container">
+        <h2>Your next connection is one tap away.</h2>
+        <p>Get VidChat for Android and start discovering new conversations.</p>
+
+        <a class="btn primary"
+           href="https://u.pcloud.link/publink/show?code=XZxBmSJZ9nykQLdXsYBdfaoUBwy82kbbb8eV&utm_source=chatgpt.com"
+           target="_blank" rel="noopener">
+          DOWNLOAD VIDCHAT NOW
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div>© <span id="year"></span> VidChat. All rights reserved.</div>
+      <div>
+        Support:
+        <a href="https://wa.me/qr/ODOM6NGHSINVG1"
+           target="_blank" rel="noopener">
+          WhatsApp @cece3mm
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
